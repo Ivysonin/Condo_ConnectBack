@@ -18,5 +18,6 @@ def create_app():
     from app.controllers.user_controller import user_bp
     app.register_blueprint(user_bp, url_prefix="/users")
 
+    from app.models import user_model, chamado_model, aviso_model
 
     return app
