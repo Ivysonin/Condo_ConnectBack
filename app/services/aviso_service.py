@@ -9,6 +9,10 @@ class AvisoService:
 
     @staticmethod
     def create(data, user):
+        """
+        Cria um novo aviso
+        """
+
         agora = datetime.now(ZoneInfo("America/Sao_Paulo"))
         titulo = data.get("titulo")
         conteudo = data.get("conteudo")
@@ -33,6 +37,10 @@ class AvisoService:
     
     @staticmethod
     def exibir():
+        """
+        exibir os avisos ativos
+        """
+
         avisos = (
             Aviso.query
             .filter_by(ativo=True)
@@ -45,6 +53,10 @@ class AvisoService:
 
     @staticmethod
     def edit(aviso_id, data, user):
+        """
+        edita um aviso dentro do prazo de 5 minutos
+        """
+
         aviso = db.session.get(Aviso, aviso_id)
 
         if not aviso or not aviso.ativo:
@@ -69,6 +81,10 @@ class AvisoService:
 
     @staticmethod
     def delete(aviso_id, user):
+        """
+        deleta um aviso(deixa o mesmo desativado)
+        """
+
         aviso = db.session.get(Aviso, aviso_id)
 
         if not aviso or not aviso.ativo:
