@@ -1,4 +1,6 @@
 from werkzeug.security import generate_password_hash
+from app.schemas.user_schema import UserSchema
+from marshmallow import ValidationError
 from app.models.user_model import User
 from app import db
 import re
@@ -61,3 +63,53 @@ class UserService:
         db.session.commit()
 
         return {"message": "Usuário cadastrado com sucesso"}, 201
+
+    @staticmethod
+    def update_user(user, data):
+        """
+        data = {
+            "nome_completo": "",
+            "email": "",
+            "bloco_apto": "",
+            "telefone": "",
+            "senha": ""
+        }
+
+        AVISO: Não precisa passar todos os campos, apenas aqueles que vão ser atualizados.
+        """
+
+        schema = UserSchema(partial=True)
+
+        try:
+            validated = schema.load(data)
+        except ValidationError as err:
+            return {"errors": err.messages}, 400
+
+        if "nome_completo" in validated:
+            nome = validated["nome_completo"].strip()
+            if not re.match(r"^[A-Za-zÀ-ÿ\s]{3,}$", nome):
+                return {"error": "Nome inválido: mínimo 3 letras"}, 400
+            user.nome_completo = nome
+
+        if "email" in validated:
+            email = validated["email"].lower()
+            if User.query.filter(User.email == email, User.id != user.id).first():
+                return {"error": "E-mail já cadastrado"}, 409
+            user.email = email
+
+        if "bloco_apto" in validated:
+            user.bloco_apto = validated["bloco_apto"]
+
+        if "telefone" in validated:
+            digits = re.sub(r"\D", "", validated["telefone"])
+            if len(digits) < 8:
+                return {"error": "Telefone inválido: mínimo 8 dígitos"}, 400
+            user.telefone = validated["telefone"]
+
+        if "senha" in validated:
+            if len(validated["senha"]) < 6:
+                return {"error": "Senha muito curta"}, 400
+            user.senha_hash = generate_password_hash(validated["senha"])
+
+        db.session.commit()
+        return {"message": "Usuário atualizado com sucesso"}, 200
