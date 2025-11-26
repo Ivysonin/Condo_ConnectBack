@@ -11,6 +11,11 @@ class AvisoService:
     def create(data, user):
         """
         Cria um novo aviso
+
+        data = {
+            "titulo": "",
+            "conteudo": ""
+        }
         """
 
         agora = datetime.now(ZoneInfo("America/Sao_Paulo"))
@@ -55,6 +60,11 @@ class AvisoService:
     def edit(aviso_id, data, user):
         """
         edita um aviso dentro do prazo de 5 minutos
+
+        data = {
+            "titulo": "",
+            "conteudo": ""
+        }
         """
 
         aviso = db.session.get(Aviso, aviso_id)
@@ -67,9 +77,10 @@ class AvisoService:
             return {"error": "Você não tem permissão para editar este aviso"}, 403
 
         agora = datetime.now(ZoneInfo("America/Sao_Paulo"))
+        aviso_editavel = aviso.editavel_ate.replace(tzinfo=ZoneInfo("America/Sao_Paulo"))
 
         # Verifica se ainda está no prazo de edição
-        if agora > aviso.editavel_ate:
+        if agora > aviso_editavel:
             return {"error": "Tempo de edição expirado"}, 403
 
         aviso.titulo = data.get("titulo", aviso.titulo)
