@@ -19,6 +19,8 @@ def create_app():
     login_manager.init_app(app)
 
     from app.controllers.user_controller import user_bp
+    from app.controllers.aviso_controller import aviso_bp
+    app.register_blueprint(aviso_bp)
     app.register_blueprint(user_bp, url_prefix="/users")
 
     from app.models import user_model, chamado_model, aviso_model
