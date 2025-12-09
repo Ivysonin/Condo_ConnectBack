@@ -20,6 +20,8 @@ def create_app():
 
     from app.controllers.user_controller import user_bp
     from app.controllers.aviso_controller import aviso_bp
+    from app.controllers.chamado_controller import chamado_bp
+    app.register_blueprint(chamado_bp, url_prefix="/chamado")
     app.register_blueprint(aviso_bp)
     app.register_blueprint(user_bp, url_prefix="/users")
 

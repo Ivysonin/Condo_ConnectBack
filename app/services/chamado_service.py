@@ -11,6 +11,12 @@ class ChamadoService:
     def create(data, user):
         """
         Cria um novo chamado no sistema
+
+        data = {
+            "titulo": "",
+            "descricao": "",
+            "categoria": ""
+        }
         """
 
         titulo = data.get("titulo")
@@ -71,6 +77,10 @@ class ChamadoService:
     def update_status(chamado_id, status, user):
         """
         Atualiza o status de um chamado existente.
+
+        data = {
+            "status": ""
+        }
         """
 
         chamado = db.session.get(Chamado, chamado_id)
