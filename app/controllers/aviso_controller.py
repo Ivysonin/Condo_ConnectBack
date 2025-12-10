@@ -9,14 +9,14 @@ aviso_bp = Blueprint("aviso", __name__)
 schema = AvisoSchema()
 
 
-@aviso_bp.route("/avisos", methods=["GET"])
+@aviso_bp.route("/", methods=["GET"])
 @login_required
 def listar_avisos():
     response, status = AvisoService.exibir()
     return jsonify(response), status
 
 
-@aviso_bp.route("/avisos", methods=["POST"])
+@aviso_bp.route("/", methods=["POST"])
 @login_required
 def criar_aviso():
 
@@ -36,7 +36,7 @@ def criar_aviso():
     return jsonify(response), status
 
 
-@aviso_bp.route("/avisos/<int:aviso_id>", methods=["PUT"])
+@aviso_bp.route("/<int:aviso_id>", methods=["PUT"])
 @login_required
 def editar_aviso(aviso_id):
 
@@ -58,7 +58,7 @@ def editar_aviso(aviso_id):
     return jsonify(response), status
 
 
-@aviso_bp.route("/avisos/<int:aviso_id>", methods=["DELETE"])
+@aviso_bp.route("/<int:aviso_id>", methods=["DELETE"])
 @login_required
 def deletar_aviso(aviso_id):
 

@@ -22,9 +22,11 @@ def create_app():
     from app.controllers.aviso_controller import aviso_bp
     from app.controllers.chamado_controller import chamado_bp
     from app.controllers.adm_controller import admin_bp
+    from app.controllers.auth_controller import auth_bp
+    app.register_blueprint(auth_bp, url_prefix="/auth")
     app.register_blueprint(admin_bp, url_prefix="/admin")
     app.register_blueprint(chamado_bp, url_prefix="/chamado")
-    app.register_blueprint(aviso_bp)
+    app.register_blueprint(aviso_bp, url_prefix="/avisos")
     app.register_blueprint(user_bp, url_prefix="/users")
 
     from app.models import user_model, chamado_model, aviso_model
