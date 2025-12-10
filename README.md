@@ -95,24 +95,25 @@ Desenvolvida em **Flask**, com autenticação via **Flask-Login**, validações 
 
 ```
 app/
- ├── models/
- │   ├── user_model.py
- │   ├── aviso_model.py
- │   └── chamado_model.py
- ├── schemas/
- │   ├── user_schema.py
- │   ├── aviso_schema.py
- │   └── chamado_schema.py
- ├── services/
- │   ├── auth_service.py
- │   ├── user_service.py
- │   ├── aviso_service.py
- │   └── chamado_service.py
  ├── controllers/
- │   ├── user_controller.py
+ │   ├── adm_controller.py
+ │   ├── auth_controller.py
  │   ├── aviso_controller.py
  │   ├── chamado_controller.py
- │   └── adm_controller.py
+ │   └── user_controller.py
+ ├── models/
+ │   ├── aviso_model.py
+ │   └── chamado_model.py
+ │   ├── user_model.py
+ ├── schemas/
+ │   ├── aviso_schema.py
+ │   └── chamado_schema.py
+ │   ├── user_schema.py
+ ├── services/
+ │   ├── auth_service.py
+ │   ├── aviso_service.py
+ │   └── chamado_service.py
+ │   ├── user_service.py
  ├── __init__.py
  ├── config.py
  └── ...
