@@ -103,17 +103,17 @@ app/
  │   └── user_controller.py
  ├── models/
  │   ├── aviso_model.py
- │   └── chamado_model.py
- │   ├── user_model.py
+ │   ├── chamado_model.py
+ │   └── user_model.py
  ├── schemas/
  │   ├── aviso_schema.py
- │   └── chamado_schema.py
- │   ├── user_schema.py
+ │   ├── chamado_schema.py
+ │   └── user_schema.py
  ├── services/
  │   ├── auth_service.py
  │   ├── aviso_service.py
- │   └── chamado_service.py
- │   ├── user_service.py
+ │   ├── chamado_service.py
+ │   └── user_service.py
  ├── __init__.py
  ├── config.py
  └── ...
@@ -160,6 +160,57 @@ flask db upgrade
 ```bash
 flask run
 ```
+
+---
+
+## 📌 **Endpoints disponíveis**
+
+### 🔐 Autenticação
+
+| Método | URL            | Descrição          |
+| ------ | -------------- | ------------------ |
+| POST   | /auth/login    | Login do usuário   |
+| POST   | /auth/logout   | Logout do usuário  |
+
+---
+
+### 👤 Usuário
+
+| Método | URL             | Descrição              |
+| ------ | --------------- | ---------------------- |
+| POST   | /users/register | Cadastra novo usuário  |
+| GET    | /users/perfil   | Informações do usuário |
+| PUT    | /users/perfil   | Atualiza informações   |
+
+---
+
+### 👤 Administração (Síndico)
+
+| Método | URL             | Descrição                |
+| ------ | -------------   | ------------------------ |
+| GET    | /admin/usuarios | Listar todos os usuários |
+
+---
+
+### 🔔 Avisos
+
+| Método | URL          | Descrição                 |
+| ------ | ------------ | ------------------------- |
+| GET    | /avisos      | Listar avisos ativos      |
+| POST   | /avisos      | Criar aviso (síndico)     |
+| PUT    | /avisos/{id} | Editar aviso (síndico)    |
+| DELETE | /avisos/{id} | Desativar aviso (síndico) |
+
+---
+
+### 🛠 Chamados
+
+| Método | URL           | Descrição                                    |
+| ------ | ------------- | -------------------------------------------- |
+| GET    | /chamado      | Listar chamados (regras por tipo de usuário) |
+| GET    | /chamado/{id} | Detalhes de um chamado                       |
+| POST   | /chamado      | Criar chamado                                |
+| PATCH  | /chamado/{id} | Alterar status (somente síndico)             |
 
 ---
 
