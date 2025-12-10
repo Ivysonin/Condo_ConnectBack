@@ -26,28 +26,11 @@ def register_user():
     return jsonify(response), status
 
 
-@user_bp.route("/login", methods=["POST"])
-def login_user():
-    data = request.get_json()
-
-    if not data:
-        return jsonify({"error": "JSON não enviado"}), 400
-
-    email = data.get("email")
-    senha = data.get("senha")
-
-    if not email or not senha:
-        return jsonify({"error": "Email e senha são obrigatórios"}), 400
-
-    response, status = AuthService.login(email, senha)
-    return jsonify(response), status
-
-
-@user_bp.route("/logout", methods=["POST"])
+@user_bp.route("/perfil", methods=["GET"])
 @login_required
-def logout_user():
-    response, status = AuthService.logout()
-    return jsonify(response), status
+def profile():
+    schema = UserSchema(exclude=["senha"])
+    return jsonify(schema.dump(current_user)), 200
 
 
 @user_bp.route("/perfil", methods=["PUT"])
@@ -60,10 +43,3 @@ def update_user():
 
     response, status = UserService.update_user(current_user, data)
     return jsonify(response), status
-
-
-@user_bp.route("/perfil", methods=["GET"])
-@login_required
-def profile():
-    schema = UserSchema(exclude=["senha"])
-    return jsonify(schema.dump(current_user)), 200
